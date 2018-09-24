@@ -1,0 +1,28 @@
+import socket
+from diffiehellman.diffiehellman import DiffieHellman
+
+
+#testar mig fram
+alice = DiffieHellman()
+alice.generate_public_key()
+UDP_IP = "127.0.0.1"
+UDP_PORT = 5005
+
+
+print("UDP target IP:",UDP_IP)
+print("UDP target port:",UDP_PORT)
+print("Public key: ", alice.public_key)
+
+sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+sock.bind((UDP_IP, 13000))
+sock.sendto(str(alice.public_key).encode(), (UDP_IP, UDP_PORT))
+
+
+data, addr = sock.recvfrom(4096)
+#print("received message:", data.decode())
+test = int(data.decode())
+alice.generate_shared_secret(test,echo_return_key=True)
+print(alice.shared_key)
+
+
+
