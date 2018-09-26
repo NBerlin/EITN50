@@ -1,4 +1,7 @@
 import socket
+from cypher import AESCipher
+from Cryptodome.Cipher import AES
+from hashlib import sha256
 from diffiehellman.diffiehellman import DiffieHellman
 
 
@@ -13,6 +16,7 @@ print("UDP target IP:",UDP_IP)
 print("UDP target port:",UDP_PORT)
 print("Public key: ", alice.public_key)
 
+#sock setup
 sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 sock.bind((UDP_IP, 13000))
 sock.sendto(str(alice.public_key).encode(), (UDP_IP, UDP_PORT))
@@ -23,6 +27,8 @@ data, addr = sock.recvfrom(4096)
 test = int(data.decode())
 alice.generate_shared_secret(test,echo_return_key=True)
 print(alice.shared_key)
+aesciph = AESCipher(alice.shared_key)
+
 
 
 
