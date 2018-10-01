@@ -50,9 +50,9 @@ while True:
         hash = hash.digest()
         print(bob.shared_key)
         session, addr = sock.recvfrom(4096)
-        notenc = decrypt(session)
-        print(str(notenc))
-        session=str(notenc)
+        session = decrypt(session)
+        print(str(session))
+
     else:
         print("--------------------------------")
         print("Meddelande innan decode: ")
