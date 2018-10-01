@@ -3,8 +3,8 @@
 # Fetched date: 2018-09-26
 import base64
 import hashlib
-from Cryptodome import Random
-from Cryptodome.Cipher import AES
+from Crypto import Random
+from Crypto.Cipher import AES
 
 class AESCipher(object):
 
