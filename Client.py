@@ -1,9 +1,9 @@
 import socket
-from Cryptodome.Cipher import AES
-from Cryptodome.Hash import SHA256
-from Cryptodome import Random
+from Crypto.Cipher import AES
+from Crypto.Hash import SHA256
+from Crypto import Random
 import base64
-import hashlib,random
+import random
 from diffiehellman.diffiehellman import DiffieHellman
 
 
@@ -49,11 +49,12 @@ obj = AES.new(hash,AES.MODE_CBC, iv)
 encrypted_message = base64.b64encode(iv + obj.encrypt(test.encode("utf8")))
 print(encrypted_message)
 sock.sendto(encrypted_message, (UDP_IP, UDP_PORT))
-
+session_number=1
 while True:
     message = input("Send message")
-    newstr=",".join((str(session),message))
+    newstr=",".join((str(session),message,str(session_number)))
     sock.sendto(encrypt(newstr), (UDP_IP, UDP_PORT))
+    session_number += 1
 
 
 
