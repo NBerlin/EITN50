@@ -18,7 +18,8 @@ print("UDP target IP:",UDP_IP)
 print("UDP target port:",UDP_PORT)
 print("Public key: ", alice.public_key)
 
-#pad funktion
+# Code stolen from: https://stackoverflow.com/questions/12524994/encrypt-decrypt-using-pycrypto-aes-256
+#--------------------------------------------------------------------------------------------------------
 BS=16
 pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS)
 
@@ -27,6 +28,7 @@ def encrypt(raw):
     iv = Random.new().read(AES.block_size)
     cipher = AES.new(hash, AES.MODE_CBC, iv)
     return base64.b64encode(iv + cipher.encrypt(raw.encode("utf8")))
+#--------------------------------------------------------------------------------------------------------
 
 #sock setup
 sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
